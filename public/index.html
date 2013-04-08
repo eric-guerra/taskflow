@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TaskFlow</title>
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>TaskFlow</h1>
+      <div id="stats"></div>
+    </header>
+    <nav id="filters">
+      <a href="#" data-status="">All</a>
+      <a href="#status/todo" data-status="todo">To do</a>
+      <a href="#status/doing" data-status="doing">Doing</a>
+      <a href="#status/done" data-status="done">Done</a>
+      <input id="search" type="search" placeholder="Search...">
+    </nav>
+    <form id="new-task">
+      <input name="title" placeholder="What needs doing? (use #tags)" autocomplete="off" required maxlength="140">
+      <select name="priority"><option value="normal">Normal</option><option value="high">High</option><option value="low">Low</option></select>
+      <input name="due" type="date">
+      <button>Add</button>
+    </form>
+    <p id="error" class="error"></p>
+    <ul id="task-list"></ul>
+  </div>
+
+  <script type="text/template" id="task-template">
+    <input type="checkbox" class="toggle" <%= status === 'done' ? 'checked' : '' %>>
+    <div class="body">
+      <span class="title"><%- title %></span>
+      <% _.each(tags, function (t) { %><a class="tag" href="#tag/<%- t %>">#<%- t %></a><% }); %>
+      <div class="meta">
+        <span class="priority p-<%- priority %>"><%- priority %></span>
+        <% if (due) { %><span class="due <%= overdue ? 'overdue' : '' %>">due <%- due %></span><% } %>
+        <select class="status">
+          <option value="todo" <%= status === 'todo' ? 'selected' : '' %>>To do</option>
+          <option value="doing" <%= status === 'doing' ? 'selected' : '' %>>Doing</option>
+          <option value="done" <%= status === 'done' ? 'selected' : '' %>>Done</option>
+        </select>
+      </div>
+    </div>
+    <span class="handle" title="Drag to reorder">&#8942;&#8942;</span>
+    <button class="destroy" title="Delete">&times;</button>
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+  <script src="/js/models.js"></script>
+  <script src="/js/views.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
