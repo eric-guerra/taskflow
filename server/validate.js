@@ -14,7 +14,7 @@ function validateTask(input, partial) {
 
   if (!partial || 'title' in input) {
     var title = typeof input.title === 'string' ? input.title.trim() : '';
-    if (!title || title.length >= 140) errors.title = 'Title is required (max 140 characters).';
+    if (!title || title.length > 140) errors.title = 'Title is required (max 140 characters).';
     else value.title = title;
   }
   if ('notes' in input) {
